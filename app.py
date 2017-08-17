@@ -27,15 +27,15 @@ def guess():
 		times -= 1
 		session ['times'] = times
 		if times == 0: #为什么在这判断？如果最后一次猜对了呢？
-			flash(u'you lose')
+			flash(u'you lose','danger')
 			return redirect(url_for('index'))#url_for()函数的参数是.html结尾的文件名吗？
 		answer = form.number.data #.number.data() 用法？
 		if answer < result:
-			flash(u'too small, you have %s times left'%times)
+			flash(u'too small, you have %s times left'%times, 'warning')
 		elif answer > result:
-			flash(u'too big, you have %s times left'%times)
+			flash(u'too big, you have %s times left'%times, 'warning')
 		else:
-			flash(u'you win')
+			flash(u'you win','success')
 			return redirect(url_for('index')) #赢了回index。
 		return redirect(url_for('guess')) #输了回guess。
 		
