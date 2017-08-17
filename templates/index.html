@@ -2,6 +2,14 @@
 
 {% block content %}
 
-<a class='btn btn-success btn-lg' href='{{url_for("guess")}}'>Start</a>
+<a class='btn btn-success btn-lg' href='{{url_for("guess")}}'>开始游戏</a>
 {% endblock %}
 
+{% for message in get_flashed_messages(with_categories=True) %}
+
+<div class ="alert alert-{{message[0]}}">
+
+	<button type='button' class='close' data-dismiss='alert'>&times;</button>
+	{{message[1]}}
+</div>
+{% endfor %}
