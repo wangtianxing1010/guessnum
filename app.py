@@ -37,9 +37,13 @@ def guess():
 		else:
 			flash(u'you win','success')
 			return redirect(url_for('index')) #赢了回index。
-		return redirect(url_for('guess')) #输了回guess。
-		
+		return redirect(url_for('guess')) #输了回guess。	
 	return render_template('guess.html',form = form) #guess()返回一个guess，是空白的表格吗？
+
+@app.errorhandler(404)
+def page_not_found(e):
+	flash('page not found')
+	return render_template('404.html') #render_template 自动去同路径下的templates文件夹找文件？
 	
 class GuessNumberForm(Form): #定义新的类，继承自Form。 可是这个class该如何使用？为何先使用后定义？
 	#用户输入数字？
