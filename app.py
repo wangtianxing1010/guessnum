@@ -37,8 +37,8 @@ def guess():
 		else:
 			flash(u'you win','success')
 			return redirect(url_for('index')) #赢了回index。
-		return redirect(url_for('guess')) #输了回guess。	
-	return render_template('guess.html',form = form) #guess()返回一个guess，是空白的表格吗？
+		return redirect(url_for('guess2')) #输了回guess。	
+	return render_template('guess2.html',form = form) #guess()返回一个guess，是空白的表格吗？
 
 @app.errorhandler(404)
 def page_not_found(e):

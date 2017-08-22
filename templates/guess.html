@@ -5,21 +5,33 @@
     	<meta charset="utf-8">
     	<title>Let's Guess</title>
     	<meta name="viewport" content="width=device-width,initial-scale=1">
-    	<link href='{{ url_for("static", filename="css/bootstrap.min.css") }}' rel='stylesheet'>
+    	<link href='{{ url_for("static", filename="bootstrap.min.css") }}' rel='stylesheet'>
 	</head>
 <body>
 {% extends 'bootstrap/base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
+
+{% block page_content %}
+<div>
+	{{ wtf.quick_form(form)}}
+</div>
+<div>
+	<form action="{{ url_for('guess') }}" class="form" method="post">
+    {{ form.csrf_token }}	
+    {{ wtf.form_field(form.number, autocomplete="off", autofocus="autofocus") }}
+    {{ wtf.form_field(form.submit) }}
+	</form>
+</div>
+{% endblock %}
+</body>
+
+<!--
 <div class='warpper'>
 {% for message in get_flashed_messages(with_categories=True) %}
 	<div class ="alert alert-{{message[0]}}">
 	<button type='button' class='close' data-dismiss='alert'>Congra&times;tulations</button>
 	{{message[1]}}
 	</div>
-</div>	
 {% endfor %}
-
-{% block page_content %}
-	{{ wtf.quick_form(form)}}
-{% endblock %}
-</body>
+</div>	
+-->
