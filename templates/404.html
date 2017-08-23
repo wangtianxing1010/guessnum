@@ -1,12 +1,17 @@
-<!--index -->
-<head>{% extends 'bootstrap/base.html' %}</head>
+<!--404 -->
+<head>
+<title>404.Guess Num</title>
+{% extends 'bootstrap/base.html' %}
+</head>
 <body>
 {% block content %}
 {% with message = get_flashed_messages() %}
-	<div class ="alert alert-info">
-	{{message}}
+	<div class ="alert alert-danger">
+	{{message[0]}}
 	<button type='button' class='close' data-dismiss='alert'>&times;</button>
 	</div>
 {% endwith %}
+	<a class='btn btn-success btn-lg' href='{{url_for("guess")}}'>Go Back To Home Page</a>
+	
 {% endblock %}
 </body>

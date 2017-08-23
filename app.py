@@ -13,33 +13,38 @@ bootstrap = Bootstrap(app) #初始化？发生了什么？
 
 
 @app.route('/')
-def index():
+def index(): # attribute *win
 	session["number"]=random.randint(0,10) #session 数据类型是什么？ 
 	session['times']= 3 #number，time 变量是什么？看上去像dict 的key
 	return render_template('index.html') #render_template 自动去同路径下的templates文件夹找文件？
 	
 @app.route('/guess/',methods =['GET','POST']) #method=['GET','POST'] 写在需要输入数据的页面。
-def guess():
+def guess(): # attribute *win
 	times = session['times']
 	result = session.get("number")
 	form = GuessNumberForm() #GuessNumberForm() 函数的用法？
-	if form.validate_on_submit(): #.validate_on_submit() 用法？
+	answer = form.number.data #.number.data() 用法？
+	#win = None
+	if form.validate_on_submit(): #.validate_on_submit() 用法？if 语句在有提交时才运行
 		times -= 1
 		session ['times'] = times
-		if times == 0: #为什么在这判断？如果最后一次猜对了呢？
-			flash(u'you lose','danger')
-			return redirect(url_for('index'))#url_for()函数的参数是.html结尾的文件名吗？
-		answer = form.number.data #.number.data() 用法？
-		if answer < result:
+		if answer == result:
+			#win = True
+			flash(u'you win, the answer is %s'% result,'success')
+			return redirect(url_for('index')) #赢了回index。		
+		elif times == 0: 
+			#win = False
+			flash(u'you lose, the answer is %s'% result,'danger')
+			return redirect(url_for('index'))#url_for()函数的参数是.html结尾的文件名吗？文件名或文件夹名
+		elif answer < result:
+			#win = 'alive'
 			flash(u'too small, you have %s times left'%times, 'warning')
-		elif answer > result:
-			flash(u'too big, you have %s times left'%times, 'warning')
 		else:
-			flash(u'you win','success')
-			return redirect(url_for('index')) #赢了回index。
-		return redirect(url_for('guess')) #输了回guess。	
-	return render_template('guess.html',form = form) #guess()返回一个guess，是空白的表格吗？
-
+			#win = 'alive'
+			flash(u'too big, you have %s times left'%times, 'warning')
+		return redirect(url_for('guess')) #错了回guess，接着猜。	
+	return render_template('guess.html',form = form) #guess()返回一个guess，是空白的表格吗? 是的，一开始没有提交数据，跳过if语句。
+	
 @app.errorhandler(404)
 def page_not_found(e):
 	flash('page not found')
