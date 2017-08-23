@@ -1,2 +1,2 @@
 # guessnum
-Basic functions are complished
+This project has flask_bootstrap installed
