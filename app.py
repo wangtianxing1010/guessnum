@@ -44,7 +44,12 @@ def guess(): # attribute *win
 			flash(u'too big, you have %s times left'%times, 'warning')
 		return redirect(url_for('guess')) #错了回guess，接着猜。	
 	return render_template('guess.html',form = form) #guess()返回一个guess，是空白的表格吗? 是的，一开始没有提交数据，跳过if语句。
+
+@app.route('/passwordguesser/')
+def passwordguesser(): #126 163
+	return render_template('passwordguesser.html') 
 	
+#Error Handling	
 @app.errorhandler(404)
 def page_not_found(e):
 	flash('page not found')
