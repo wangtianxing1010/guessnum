@@ -3,9 +3,13 @@ import random
 
 from flask import Flask, render_template, session, flash, url_for, redirect
 from flask_wtf import Form
+
 from wtforms import IntegerField, SubmitField
 from wtforms.validators import Required, NumberRange
+
 from flask_bootstrap import Bootstrap
+
+from guessForms import PasswordGuesserForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY']='very hard to guess string' #secretkey 干嘛的？
@@ -14,9 +18,9 @@ bootstrap = Bootstrap(app) #初始化？发生了什么？
 
 @app.route('/')
 def index(): # attribute *win
-	session["number"]=random.randint(0,10) #session 数据类型是什么？ 
+	session["number"]=random.randint(1,10) #session 数据类型是什么？ 
 	session['times']= 3 #number，time 变量是什么？看上去像dict 的key
-	return render_template('index.html') #render_template 自动去同路径下的templates文件夹找文件？
+	return render_template('index.html') #render_template 自动去同路径下的templates文件夹找文件？YES
 	
 @app.route('/guess/',methods =['GET','POST']) #method=['GET','POST'] 写在需要输入数据的页面。
 def guess(): # attribute *win
@@ -45,9 +49,17 @@ def guess(): # attribute *win
 		return redirect(url_for('guess')) #错了回guess，接着猜。	
 	return render_template('guess.html',form = form) #guess()返回一个guess，是空白的表格吗? 是的，一开始没有提交数据，跳过if语句。
 
-@app.route('/passwordguesser/')
+@app.route('/passwordguesser/',methods =['GET','POST'])
 def passwordguesser(): #126 163
-	return render_template('passwordguesser.html') 
+	#account = inupt
+	#time = session['times']
+	#result = session.get("number")
+	passwordguesserform = PasswordGuesserForm() 
+	#answer = form.number.data 
+	return render_template('passwordguesser.html',passwordguesserform = passwordguesserform) 
+
+
+
 	
 #Error Handling	
 @app.errorhandler(404)
@@ -62,6 +74,7 @@ class GuessNumberForm(Form): #定义新的类，继承自Form。 可是这个cla
 	#Required(), NumberRange()用法？
 	submit = SubmitField(u'submit') #SubmitField() 用法？
 
+	
 if __name__ == '__main__':
 	app.run(debug=True)
 	

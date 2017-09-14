@@ -11,6 +11,8 @@
 	{% import 'bootstrap/wtf.html' as wtf %}
 
 	{% block content %} <!-- block page_content 和 block content 的区别？ -->
+
+	<!--flash message-->
 <div class='wrapper'>
 	{% for message in get_flashed_messages(with_categories=True) %}
 		{% if message[0] == 'warning' %}
@@ -21,6 +23,7 @@
 		{% endif %}
 	{% endfor %}
 </div>
+<!--wtf.quick_form-->
 <div>
 	{{ wtf.quick_form(form)}}
 <!--
